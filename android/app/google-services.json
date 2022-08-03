@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "192282045393",
+    "project_id": "swiftnotesproject",
+    "storage_bucket": "swiftnotesproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192282045393:android:3151dc410e4bf4c8364ef0",
+        "android_client_info": {
+          "package_name": "com.example.swift_notes_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "192282045393-q1ptoq07cin9ev1523rnh0s4nus4jht8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmcSYzHd0HZVF2gbbRocSpv4O2KiOTrIU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "192282045393-q1ptoq07cin9ev1523rnh0s4nus4jht8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

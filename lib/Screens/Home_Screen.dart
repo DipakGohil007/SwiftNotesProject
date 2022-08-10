@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:swift_notes_project/aboutus.dart';
 
 import '../adddata.dart';
 import '../main.dart';
@@ -72,15 +73,15 @@ class _HomeState extends State<HomeScreen> {
           children: [
             const DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Colors.blueGrey,
               ), //BoxDecoration
               child: UserAccountsDrawerHeader(
-                decoration: BoxDecoration(color: Colors.blue),
+                decoration: BoxDecoration(color: Colors.blueGrey),
                 accountName: Text(
-                  "Dipak Gohil",
+                  "Swift Notes",
                   style: TextStyle(fontSize: 18),
                 ),
-                accountEmail: Text("gohildipak007@gmail.com"),
+                accountEmail: Text("swiftnotes007@gmail.com"),
                 currentAccountPictureSize: Size.square(50),
                 currentAccountPicture: CircleAvatar(
                   backgroundImage: AssetImage('images/avatar.png'),
@@ -88,38 +89,39 @@ class _HomeState extends State<HomeScreen> {
               ), //UserAccountDrawerHeader
             ), //DrawerHeader
             ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text(' My Profile '),
+              leading: const Icon(Icons.add_box_rounded),
+              title: const Text('Add Note'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => addnote(),
+                  ),
+                );
               },
             ),
             ListTile(
-              leading: const Icon(Icons.book),
-              title: const Text(' Car Details '),
+              leading: const Icon(Icons.view_list),
+              title: const Text('All Notes'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => HomeScreen(),
+                  ),
+                );
               },
             ),
             ListTile(
-              leading: const Icon(Icons.workspace_premium),
-              title: const Text(' Go Premium '),
+              leading: const Icon(Icons.info),
+              title: const Text('About Us'),
               onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.nightlight),
-              title: const Text(' Mode '),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.edit),
-              title: const Text(' Edit Profile '),
-              onTap: () {
-                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => AboutUs(),
+                  ),
+                );
               },
             ),
             ListTile(
@@ -128,7 +130,6 @@ class _HomeState extends State<HomeScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              trailing: Icon(Icons.logout),
             ),
           ],
         ),
@@ -144,7 +145,7 @@ class _HomeState extends State<HomeScreen> {
           );
         },
         child: Icon(
-          Icons.add,
+          Icons.edit, //for add button
         ),
       ),
 
@@ -181,103 +182,43 @@ class _HomeState extends State<HomeScreen> {
 
           l = g.split(',');
 
-          return GestureDetector(
-            onTap: () {
-              setState(() {
-                k = snapshot.key;
-              });
-              showDialog(
-                context: context,
-                builder: (ctx) => AlertDialog(
-                  title: Container(
-                    decoration: BoxDecoration(border: Border.all()),
-                    child: TextField(
-                      controller: second,
-                      textAlign: TextAlign.center,
-
-                      decoration: InputDecoration(
-                        hintText: 'Title',
-                      ),
-                    ),
+          return Container(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                    color: Colors.white,
                   ),
-                  content: Container(
-                    decoration: BoxDecoration(border: Border.all()),
-                    child: TextField(
-                      controller: third,
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                        hintText: 'description',
-                      ),
-                    ),
-                  ),
-                  actions: <Widget>[
-                    MaterialButton(
-                      onPressed: () {
-                        Navigator.of(ctx).pop();
-                      },
-                      color: Colors.blue,
-                      child: Text(
-                        "Cancel",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    MaterialButton(
-                      onPressed: () async {
-                        await upd();
-                        Navigator.of(ctx).pop();
-                      },
-                      color: Colors.blue,
-                      child: Text(
-                        "Update",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
+                  borderRadius: BorderRadius.circular(20),
                 ),
-              );
-            },
-            child: Container(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListTile(
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                      color: Colors.white,
-                    ),
-                    borderRadius: BorderRadius.circular(20),
+                tileColor: Colors.blueGrey[200],
+                trailing: IconButton(
+                  icon: Icon(
+                    Icons.delete,
+                    color: Color.fromARGB(255, 255, 0, 0),
                   ),
-                  tileColor: Colors.blueGrey[200],
-                  trailing: IconButton(
-                    icon: Icon(
-                      Icons.delete,
-                      color: Color.fromARGB(255, 255, 0, 0),
-                    ),
-                    onPressed: () {
-                      ref.child(snapshot.key!).remove();
-                    },
+                  onPressed: () {
+                    ref.child(snapshot.key!).remove();
+                  },
+                ),
+                title: Text(
+                  l[1],
+                  // 'dd',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
                   ),
-                  title: Text(
-                    l[1],
+                ),
+
+                subtitle: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Text(
+                    l[0],
                     // 'dd',
                     style: TextStyle(
-                      fontSize: 25,
+                      fontSize: 15,
                       fontWeight: FontWeight.bold,
-                    ),
-                  ),
-
-                  subtitle: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text(
-                      l[0],
-                      // 'dd',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
                     ),
                   ),
                 ),

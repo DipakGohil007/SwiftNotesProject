@@ -26,67 +26,79 @@ class _addnoteState extends State<addnote> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Add Notes"),
+        leading: GestureDetector(
+          child: Icon( Icons.arrow_back_rounded),
+          onTap: () {
+            Navigator.push(context,
+            MaterialPageRoute(builder: (context){
+              return HomeScreen();
+            })
+            );
+          } ,
+        ) ,
         backgroundColor: Colors.blueGrey[900],
       ),
-      body: Container(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Container(
-                child: TextField(
-                  controller: second,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+      body: SingleChildScrollView (
+        child: Container(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Container(
+                  child: TextField(
+                    controller: second,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      hintText: 'Enter Note',
                     ),
-                    hintText: 'Enter Note',
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Container(
-                child: TextField(
-                  controller: third,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+              SizedBox(
+                height: 5,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Container(
+                  child: TextField(
+                    controller: third,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      hintText: 'description',
                     ),
-                    hintText: 'description',
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            MaterialButton(
-              color: Colors.blue[600],
-              onPressed: () {
-                ref.set({
-                  "title": second.text,
-                  "subtitle": third.text,
-                }).asStream();
-                Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (_) => HomeScreen()));
-              },
-              child: Text(
-                "save",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
+              SizedBox(
+                height: 10,
+              ),
+              MaterialButton(
+                color: Colors.blue[600],
+                onPressed: () {
+                  ref.set({
+                    "title": second.text,
+                    "subtitle": third.text,
+                  }).asStream();
+                  Navigator.pushReplacement(
+                      context, MaterialPageRoute(builder: (_) => HomeScreen()));
+                },
+                child: Text(
+                  "save",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

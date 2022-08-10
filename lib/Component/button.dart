@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class LoginSignupButton extends StatelessWidget {
   final String title;
-  final dynamic  ontapp;
+  final dynamic ontapp;
 
   LoginSignupButton({required this.title, required this.ontapp});
 

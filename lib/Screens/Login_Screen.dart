@@ -2,10 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:swift_notes_project/Component/button.dart';
 import '../constants.dart';
 import 'Home_Screen.dart';
 import 'Register_Screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -18,6 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
   String email = '';
   String password = '';
   bool isloading = false;
+
+  final storage = new FlutterSecureStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -92,13 +96,16 @@ class _LoginScreenState extends State<LoginScreen> {
                             LoginSignupButton(
                               title: 'Login',
                               ontapp: () async {
+
                                 if (formkey.currentState!.validate()) {
                                   setState(() {
                                     isloading = true;
                                   });
                                   try {
-                                    await _auth.signInWithEmailAndPassword(
+                                    UserCredential userCredential = await _auth.signInWithEmailAndPassword(
                                         email: email, password: password);
+
+                                    await storage.write(key: "uid", value: userCredential.user?.uid);
 
                                     await Navigator.of(context).push(
                                       MaterialPageRoute(

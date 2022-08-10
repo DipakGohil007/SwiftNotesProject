@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../adddata.dart';
 import '../main.dart';
@@ -37,6 +38,9 @@ class _MyAppState extends State<MyApp> {
 
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
+final storage = new FlutterSecureStorage();
+
+
 _signOut() async {
   await _firebaseAuth.signOut();
 }
@@ -64,27 +68,67 @@ class _HomeState extends State<HomeScreen> {
     return Scaffold(
       drawer: Drawer(
         child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              child: Text('Drawer Header'),
+          padding: const EdgeInsets.all(0),
+          children: [
+            const DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blueGrey,
-              ),
-            ),
+                color: Colors.blue,
+              ), //BoxDecoration
+              child: UserAccountsDrawerHeader(
+                decoration: BoxDecoration(color: Colors.blue),
+                accountName: Text(
+                  "Dipak Gohil",
+                  style: TextStyle(fontSize: 18),
+                ),
+                accountEmail: Text("gohildipak007@gmail.com"),
+                currentAccountPictureSize: Size.square(50),
+                currentAccountPicture: CircleAvatar(
+                  backgroundImage: AssetImage('images/avatar.png'),
+                ), //circleAvatar
+              ), //UserAccountDrawerHeader
+            ), //DrawerHeader
             ListTile(
-              title: Text('Item 1'),
+              leading: const Icon(Icons.person),
+              title: const Text(' My Profile '),
               onTap: () {
-                // Update the state of the app.
-                // ...
+                Navigator.pop(context);
               },
             ),
             ListTile(
-              title: Text('Item 2'),
+              leading: const Icon(Icons.book),
+              title: const Text(' Car Details '),
               onTap: () {
-                // Update the state of the app.
-                // ...
+                Navigator.pop(context);
               },
+            ),
+            ListTile(
+              leading: const Icon(Icons.workspace_premium),
+              title: const Text(' Go Premium '),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.nightlight),
+              title: const Text(' Mode '),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.edit),
+              title: const Text(' Edit Profile '),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text('LogOut'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+              trailing: Icon(Icons.logout),
             ),
           ],
         ),
@@ -113,6 +157,7 @@ class _HomeState extends State<HomeScreen> {
           IconButton(
           onPressed: () async {
             await _signOut();
+            await storage.delete(key: "uid");
             if (_firebaseAuth.currentUser == null) {
               Navigator.push(
                 context,
@@ -149,6 +194,7 @@ class _HomeState extends State<HomeScreen> {
                     child: TextField(
                       controller: second,
                       textAlign: TextAlign.center,
+
                       decoration: InputDecoration(
                         hintText: 'Title',
                       ),
